@@ -1,20 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <div id = search-bar>
-        <form action="/search" method="get">
-            <input type="search" id="search-input" name="query" placeholder="Search..." aria-label="Search through site content">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-    <div id = infor>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="../css/style.css" >
+
+  </head>
+ <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-4">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand fw-bold" href="#">☁️ WeatherDashboard</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarContent">
+                
+                <div id="search-container-waper" class="d-flex mx-auto my-2 my-lg-0">
+                    <div id="search-container"></div> 
+                </div>
+
+                <div id="selecter-waper" class="d-flex align-items-center mt-2 mt-lg-0">
+                    <label class="me-2">Units:</label>
+                    <select id="unit-toggle" class="form-select form-select">
+                        <option value="imperial">imperial °F</option>
+                        <option value="metric">metric °C</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-12">
+                <section id="current-weather-section" class="mb-5">
+                    <div id="dispaly-card-waper" class="card shadow-lg">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center justify-content-center">
+                                
+                                <div class="me-3">
+                                    <img id="weather-icon" src="" alt="weather icon">
+                                </div>
+
+                                <div id="temp-text" class="d-flex align-items-start border-end">
+                                    <h1 id="temp-display" class="display-3 fw-bold mb-0">--</h1>
+                                    <span id="unit-display" class="fs-3 mt-2"></span>
+                                </div>
+
+                                <div class="text-start">
+                                    <h3 id="weather-desc" class="h4 fw-bold mb-1 text-capitalize">Loading...</h3>
+                                    
+                                    <p class="mb-0 small weather-temp">
+                                        Feels: <span id="weather-feels-like">--</span>
+                                    </p>
+                                    
+                                    <p class="mb-0 small weather-temp">
+                                        H: <span id="temp-high">--</span>° 
+                                        L: <span id="temp-low">--</span>°
+                                    </p>
+                                </div>
+
+                            </div>
+                            
+                            <div id="city-name-div" class="text-center mt-3 border-top pt-2">
+                                <small id="city-name" class="text-uppercase tracking-wider">City Name</small>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+               <section id="forecast-section" class="mt-5">
+                    <h4 class="mb-3 text-secondary">Forecast</h4>
+                    
+                    <div id="forecast-container" class="row row-cols-2 row-cols-md-5 g-3"> </div>
+                </section>
+
+            </main>
+        </div>
     </div>
-    <script src="../JavaScript/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/googleMapsJSAPI.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+:root{
+    --bg-color: #435465;
+    --text-color: white;
+    --card-bg-color: #2e2e2e;
+    --border-color:156, 156, 156;
+}
+#search-container{
+    width: 100%;
+}
+
+#unit-toggle{
+    
+    width: 100%;
+}
+
+#search-container-waper{
+    width: 100%;
+    justify-content: center;
+}
+
+#dispaly-card-waper{
+    color: var(--text-color);
+    background-color:var(--bg-color);
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#weather-icon{
+    width: 80px;
+    filter: drop-shadow(2px 4px 6px black)
+}
+
+#temp-text{
+    padding: 10px;
+    margin: 10px;
+    border-color: rgb(var(--border-color));
+}
+.weather-temp{
+    opacity: 0.7;
+}
+#city-name-div{
+    border-color: rgb(var(--border-color))
+}
