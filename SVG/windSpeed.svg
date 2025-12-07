@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <defs>
+        <style>
+            /* CSS embedded within the SVG */
+            .wind-icon-group {
+            width: 100px;
+            height: 100px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            }
+
+            .tree-foliage { fill: #4CAF50; }
+            .tree-trunk { fill: #795548; }
+            .ground { fill: #BDBDBD; }
+
+            /* UPDATED CSS FOR SMALL PLANTS */
+            .small-plants {
+            fill: none; /* Ensure no fill */
+            stroke: #EF6C00; /* Orange color for the lines */
+            stroke-width: 1.5px; /* Thin lines for detail */
+            stroke-linecap: round; /* Rounded ends look friendlier */
+            stroke-linejoin: round;
+            }
+
+            .wind-lines {
+            fill: none;
+            stroke: #B3E5FC;
+            stroke-width: 3;
+            stroke-linecap: round;
+            transition: stroke 0.3s ease;
+            }
+
+            .wind-icon-group:hover {
+            transform: scale(1.05);
+            }
+
+            .wind-icon-group:hover .wind-lines {
+            stroke: #4FC3F7;
+            }
+        </style>
+    </defs>
+
+    <g class="wind-icon-group">
+        <path class="ground" d="M4,56 H60 Q62,56 62,58 V60 H2 V58 Q2,56 4,56 Z"/>
+
+        <g class="small-plants">
+            <path d="M10,58 V51 M10,56 l-2,-1.5 M10,56 l2,-1.5 M10,53.5 l-2,-1.5 M10,53.5 l2,-1.5 M10,51 l-2,-1.5 M10,51 l2,-1.5"/>
+            <path d="M54,58 V51 M54,56 l-2,-1.5 M54,56 l2,-1.5 M54,53.5 l-2,-1.5 M54,53.5 l2,-1.5 M54,51 l-2,-1.5 M54,51 l2,-1.5"/>
+        </g>
+
+        <rect class="tree-trunk" x="30" y="44" width="4" height="12"/>
+        <path class="tree-foliage" d="M32,12 L16,32 H24 L14,44 H50 L40,32 H48 L32,12 Z"/>
+
+        <g class="wind-lines">
+            <path d="M14,28 h-8 q-4,0 -4,4"/>
+            <path d="M18,36 h-6 q-4,0 -4,-4"/>
+            <path d="M50,24 h8 q4,0 4,4"/>
+            <path d="M46,40 h8 q4,0 4,-4"/>
+        </g>
+    </g>
+</svg>

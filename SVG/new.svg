@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+    <defs>
+        <style>
+            /* This CSS lives entirely inside the SVG file */
+            .styled-droplet {
+            /* Set the color */
+            fill: #3498db;
+            /* Set the default size to be bigger */
+            width: 50px;
+            height: 50px;
+            /* Add a smooth transition for hover effects */
+            transition: all 0.3s ease;
+            }
+
+            /* Hover effect works even when opened as a standalone file */
+            .styled-droplet:hover {
+            fill: #2980b9; /* Turn darker blue */
+            transform: scale(1.05); /* Grow slightly bigger */
+            cursor: pointer;
+            }
+        </style>
+    </defs>
+
+    <path class="styled-droplet" d="M12 2.5C8.5 7.5 4 11.5 4 16.5C4 20.6 7.6 24 12 24C16.4 24 20 20.6 20 16.5C20 11.5 15.5 7.5 12 2.5Z"/>
+</svg>

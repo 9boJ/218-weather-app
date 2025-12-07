@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" role="img" aria-label="Sunrise and Sunset graphic">
+    <title>Sunrise and Sunset Path</title>
+    <defs>
+        <style type="text/css">
+            :root {
+            --sun-color: #FFAB00; /* Warm Orange */
+            --sun-glow: rgba(255, 171, 0, 0.3); /* Transparent Orange Glow */
+            --arrow-rise-color: #FDD835; /* Yellow for rising */
+            --arrow-set-color: #FFAB00; /* Orange for setting */
+            --horizon-color: #B0C4DE; /* Light blue horizon bar */
+            --path-color: rgba(176, 196, 222, 0.5); /* Semi-transparent blue for path */
+            }
+
+            /* --- Base Styles --- */
+            .cycle-container {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            }
+
+            /* --- Element Specific Styles --- */
+            .horizon-bar {
+            stroke: var(--horizon-color);
+            stroke-width: 4; /* Thicker horizon bar */
+            opacity: 1;
+            }
+
+            .sun-path {
+            stroke: var(--path-color);
+            stroke-width: 2;
+            stroke-dasharray: 4 4; /* Dashed line for the path */
+            }
+
+            .sun {
+            fill: var(--sun-color);
+            stroke: none;
+            }
+
+            .sun-glow {
+            fill: var(--sun-glow);
+            stroke: none;
+            }
+
+            .arrow.rise {
+            stroke: var(--arrow-rise-color);
+            }
+
+            .arrow.set {
+            stroke: var(--arrow-set-color);
+            }
+        </style>
+    </defs>
+
+    <g class="cycle-container">
+
+        <path d="M 10 50 A 50 35 0 0 1 110 50" class="sun-path"/>
+        <line x1="5" y1="50" x2="115" y2="50" class="horizon-bar"/>
+
+        <g class="sunrise-group">
+            <circle cx="30" cy="20" r="14" class="sun-glow"/>
+            <circle cx="30" cy="20" r="7" class="sun"/>
+            <path d="M 12 27 V 13 M 8.5 20 L 12 13 L 15.5 20" class="arrow rise"/>
+        </g>
+
+        <g class="sunset-group">
+            <circle cx="107" cy="40" r="14" class="sun-glow"/>
+            <circle cx="107" cy="40" r="7" class="sun"/>
+            <path d="M 107 13 V 27 M 103.5 20 L 107 27 L 110.5 20" class="arrow set"/>
+        </g>
+    </g>
+</svg>

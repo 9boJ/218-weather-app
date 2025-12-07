@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
-
   (await google.maps.importLibrary('places'));
+
+  const OPEMWEATHERMAP_KEY = ''
 
   const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({
     includedPrimaryTypes: ['locality', 'administrative_area_level_3']
@@ -43,9 +44,10 @@ async function fetchData(lat,lng,unitSystem) {
   fetchForecastData(lat,lng,unitSystem);
 }
 
+
+
 async function fetchWeatherData(lat,lng,unitSystem) {
-  const apiKey = "";
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=${unitSystem}&exclude=minutely,hourly&appid=${apiKey}`
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=${unitSystem}&exclude=minutely,hourly&appid=${OPEMWEATHERMAP_KEY}`
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -58,8 +60,7 @@ async function fetchWeatherData(lat,lng,unitSystem) {
   }
 }
 async function fetchForecastData(lat,lng,unitSystem) {
-  const apiKey = "";
-  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&units=${unitSystem}&exclude=minutely,hourly&appid=${apiKey}`
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&units=${unitSystem}&exclude=minutely,hourly&appid=${OPEMWEATHERMAP_KEY}`
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -113,7 +114,7 @@ function setText(elementId, text) {
 
 function displayForecast(weatherList, unitSystem) {
     const container = document.getElementById("forecast-container");
-    container.innerHTML = ""; 
+    container.innerHTML = "";
 
     const listForecast = weatherList.list
     const dailyData = listForecast.filter(reading => reading.dt_txt.includes("12:00:00"));
