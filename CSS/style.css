@@ -14,8 +14,14 @@
 }
 
 #search-container-waper{
-    width: 100%;
+    width: 70%;
     justify-content: center;
+}
+
+@media (max-width: 768px) {
+    #search-container-waper {
+        width: 50%;
+    }
 }
 
 #dispaly-card-waper{
@@ -42,3 +48,10 @@
 #city-name-div{
     border-color: rgb(var(--border-color))
 }
+#unit-toggle {
+    flex-shrink: 0;
+    width: auto;
+    min-width: fit-content;
+    padding-right: 2rem;
+}
+

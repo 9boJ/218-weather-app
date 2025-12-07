@@ -1,4 +1,4 @@
-async function initMap() {
+document.addEventListener("DOMContentLoaded", async function () {
 
   (await google.maps.importLibrary('places'));
 
@@ -29,13 +29,14 @@ async function initMap() {
       const lng = place.location.lng();
 
       const getUnit = document.getElementById('unit-toggle');
+
+
       
       // Pass ALL THREE to the next function
       fetchData(lat, lng,getUnit.value);
             
     }
   );
-}
 
 async function fetchData(lat,lng,unitSystem) {
   fetchWeatherData(lat,lng,unitSystem);
@@ -102,8 +103,7 @@ function displayWeatherData(data,unitSystem){
 
 function setText(elementId, text) {
     const element = document.getElementById(elementId);
-    
-    // Safety check: Does this ID actually exist?
+
     if (element) {
         element.innerText = text;
     } else {
@@ -133,8 +133,8 @@ function displayForecast(weatherList, unitSystem) {
                         <img src="https://openweathermap.org/img/wn/${icon}.png" alt="icon" width="50">
                         <p class="display-6 fw-bold mb-0">${temp}${symbol}</p>
                         <p class="mb-0 small weather-temp">
-                                        H: <span id="temp-high">${temp}</span>° 
-                                        L: <span id="temp-low">${temp}s</span>°
+                                        H: <span id="temp-high">${temp_max}</span>° 
+                                        L: <span id="temp-low">${temp_min}s</span>°
                         </p>
                     </div>
                 </div>
@@ -167,8 +167,4 @@ function error(err){
 
 navigator.geolocation.getCurrentPosition(success, error)
 
-initMap();
-
-
-
-
+});

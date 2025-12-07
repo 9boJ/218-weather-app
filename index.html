@@ -11,31 +11,33 @@
   </head>
  <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-4">
-        <div class="container-fluid">
-            
-            <a class="navbar-brand fw-bold" href="#">☁️ WeatherDashboard</a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">☁️ WeatherDashboard</a>
 
-            <div class="collapse navbar-collapse " id="navbarContent">
-                
-                <div id="search-container-waper" class="d-flex mx-auto my-2 my-lg-0">
-                    <div id="search-container"></div> 
-                </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div id="selecter-waper" class="d-flex align-items-center mt-2 mt-lg-0">
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="d-flex align-items-center w-100 flex-nowrap">
+
+        
+                    <div id="search-container-waper">
+                        <div id="search-container"></div>
+                    </div>
+              
+                <div id="selecter-waper" class="d-flex align-items-center">
                     <label class="me-2">Units:</label>
-                    <select id="unit-toggle" class="form-select form-select">
+                    <select id="unit-toggle" class="form-select form-select-sm">
                         <option value="imperial">imperial °F</option>
                         <option value="metric">metric °C</option>
                     </select>
                 </div>
+
             </div>
         </div>
-    </nav>
-
+    </div>
+</nav>
     <div class="container-fluid">
         <div class="row">
             <main class="col-md-12">
