@@ -21,7 +21,6 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="d-flex align-items-center w-100 flex-nowrap">
 
-        
                     <div id="search-container-waper">
                         <div id="search-container"></div>
                     </div>
@@ -42,7 +41,7 @@
         <div class="row">
             <main class="col-md-12">
                 <section id="current-weather-section" class="mb-5">
-                    <div id="dispaly-card-waper" class="card shadow-lg">
+                    <div id="mainCardsWrap" class="card shadow-lg cards">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-center">
                                 
@@ -78,12 +77,75 @@
                     </div>
                 </section>
 
-               <section id="forecast-section" class="mt-5">
+                <section id="weather-data-section" class="mt-5">
+                    <h4 class="mb-3 text-secondary">Conditions</h4>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-4">
+                            <div id="sunriseSunsetCard" class="card text-center shadow-sm h-100 cards">
+                            <div class="card-body p-3 text-center">
+                                <h5 class="card-title fw-bold mb-2">Sunrise & Sunset</h5>
+                                <img class="svgs" src="SVG/sunriseSunset.svg" alt="icon" width="50">
+                                <p class=" row mb-0 small ">
+                                    Sunrise: <span id="sunrise-time">--</span>
+                                    Sunset: <span id="sunset-time">--</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div id="windSpeedCard" class="card text-center shadow-sm h-100 cards">
+                            <div class="card-body p-3 text-center">
+                                <h5 class="card-title fw-bold mb-2">Wind Speed</h5>
+                                <img class="svgs" src="SVG/windSpeed.svg" alt="icon" width="50">
+                                <p class=" mb-0 small " style="margin: 2rem;">
+                                    Wind Speed: <span id="windSpeed">--</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div id="humidityCard" class="card text-center shadow-sm h-100 cards">
+                            <div class="card-body p-3 text-center">
+                                <h5 class="card-title fw-bold mb-2">Humidity</h5>
+                                <img class="svgs" src="SVG/humidity.svg" alt="icon" width="50">
+                                <p class=" mb-0 small " style="margin: 2rem;">
+                                    Humidity: <span id="humidity">--</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+                <section id="forecast-section" class="mt-5">
                     <h4 class="mb-3 text-secondary">Forecast</h4>
-                    
-                    <div id="forecast-container" class="row row-cols-2 row-cols-md-5 g-3"> </div>
+
+                    <div id="forecast-container" class="row row-cols-2 row-cols-md-5 g-3"></div>
                 </section>
 
+                <!-- For making and use template
+                    (dcode) https://youtu.be/tlcEXDGo0oY
+                -->
+                <template id="forecast-card-template">
+                    <div class="col">
+                        <div class="card text-center shadow-sm h-100 cards">
+                            <div class="card-body p-3">
+                                <h5 class="card-title fw-bold mb-2 forecast-date"></h5>
+
+                                <img class="forecast-icon" src="" alt="icon" width="50">
+
+                                <p class="display-6 fw-bold mb-0 forecast-temp"></p>
+
+                                <p class="mb-0 small weather-temp">
+                                    H: <span class="temp-high"></span>°
+                                    L: <span class="temp-low"></span>°
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </main>
         </div>
     </div>

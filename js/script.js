@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
   (await google.maps.importLibrary('places'));
-
-  const OPEMWEATHERMAP_KEY = ''
+        let currentLat = null;
+        let currentLng = null;
+  const OPEMWEATHERMAP_KEY = '';
 
   const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({
     includedPrimaryTypes: ['locality', 'administrative_area_level_3']
@@ -18,6 +19,15 @@ document.addEventListener("DOMContentLoaded", async function () {
   //prettier-ignore
   //@ts-ignore
 
+        const unitToggle = document.getElementById('unit-toggle');
+
+        unitToggle.addEventListener('change', function() {
+
+            if (currentLat != null && currentLng != null ) {
+                fetchData(currentLat, currentLng, this.value);
+            }
+        });
+
   placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
   
       const place = placePrediction.toPlace();
@@ -26,25 +36,19 @@ document.addEventListener("DOMContentLoaded", async function () {
           fields: ['displayName', 'location', 'formattedAddress'] 
       });
 
-      const lat = place.location.lat();
-      const lng = place.location.lng();
+      currentLat = place.location.lat();
+      currentLng = place.location.lng();
 
       const getUnit = document.getElementById('unit-toggle');
-
-
-      
-      // Pass ALL THREE to the next function
-      fetchData(lat, lng,getUnit.value);
+      await fetchData(currentLat, currentLng, getUnit.value);
             
     }
   );
 
 async function fetchData(lat,lng,unitSystem) {
-  fetchWeatherData(lat,lng,unitSystem);
-  fetchForecastData(lat,lng,unitSystem);
+  await fetchWeatherData(lat, lng, unitSystem);
+  await fetchForecastData(lat, lng, unitSystem);
 }
-
-
 
 async function fetchWeatherData(lat,lng,unitSystem) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=${unitSystem}&exclude=minutely,hourly&appid=${OPEMWEATHERMAP_KEY}`
@@ -67,105 +71,131 @@ async function fetchForecastData(lat,lng,unitSystem) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    displayForecast(data,unitSystem)
+    displayForecast(data,unitSystem);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
 
-function displayWeatherData(data,unitSystem){
+    function displayWeatherData(data,unitSystem){
 
-  const temp = Math.round(data.main.temp)
-  const feels_like = Math.round(data.main.feels_like)
-  const humidity = data.main.humidity
-  const temp_max =  Math.round(data.main.temp_max)
-  const temp_min = Math.round(data.main.temp_min)
-  const displayName = data.name
+      const temp = Math.round(data.main.temp);
+      const feels_like = Math.round(data.main.feels_like);
+      const humidity = data.main.humidity;
+      const temp_max =  Math.round(data.main.temp_max);
+      const temp_min = Math.round(data.main.temp_min);
+      const displayName = data.name;
+      const sunriseDate = new Date(data.sys.sunrise * 1000);
+      const sunsetDate = new Date(data.sys.sunset * 1000);
 
-    setText("city-name", displayName);
+        const sunriseTimeStr = sunriseDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const sunsetTimeStr = sunsetDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const windspeed = data.wind.speed;
 
-    const symbol = unitSystem === "imperial" ? " °F" : " °C";
 
-   setText("unit-display",symbol)
 
-    setText("weather-desc", data.weather[0].description);
+        setText("city-name", displayName);
 
-    setText("temp-display", temp );
+        const symbol = unitSystem === "imperial" ? " °F" : " °C";
 
-    setText("weather-feels-like", feels_like + symbol);
+       setText("unit-display",symbol)
 
-    setText("temp-high", temp_max);
+        setText("weather-desc", data.weather[0].description);
 
-    setText("temp-low", temp_min);
+        setText("temp-display", temp );
 
-    const iconCode = data.weather[0].icon;
-    document.getElementById("weather-icon").src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-}
+        setText("weather-feels-like", feels_like + symbol);
 
-function setText(elementId, text) {
-    const element = document.getElementById(elementId);
+        setText("temp-high", temp_max);
 
-    if (element) {
-        element.innerText = text;
-    } else {
-        console.error(`Could not find element with ID: ${elementId}`);
+        setText("temp-low", temp_min);
+
+        setText("sunrise-time", sunriseTimeStr);
+
+        setText("sunset-time", sunsetTimeStr);
+
+        const symbolSpeed = unitSystem === "imperial" ? " Mi/H" : " M/S";
+
+        setText("windSpeed", windspeed + symbolSpeed);
+
+        setText("humidity",humidity + "%")
+
+
+        const iconCode = data.weather[0].icon;
+        document.getElementById("weather-icon").src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+        addCSS(data);
     }
-}
 
-function displayForecast(weatherList, unitSystem) {
-    const container = document.getElementById("forecast-container");
-    container.innerHTML = "";
+    function setText(elementId, text) {
+        const element = document.getElementById(elementId);
 
-    const listForecast = weatherList.list
-    const dailyData = listForecast.filter(reading => reading.dt_txt.includes("12:00:00"));
+        if (element) {
+            element.innerText = text;
+        } else {
+            console.error(`Could not find element with ID: ${elementId}`);
+        }
+    }
 
-    dailyData.forEach(day => {
-        const date = new Date(day.dt * 1000).toLocaleDateString("en-US", { weekday: 'short' });
-        const temp = Math.round(day.main.temp);
-        const icon = day.weather[0].icon;
-        const temp_max = Math.round(day.main.temp_max);
-        const temp_min = Math.round(day.main.temp_min);
+    function displayForecast(weatherList, unitSystem) {
+        const container = document.getElementById("forecast-container");
+        const template = document.getElementById("forecast-card-template");
+
+        container.innerHTML = "";
+
+        const listForecast = weatherList.list;
+
+        const dailyData = listForecast.filter(reading => reading.dt_txt.includes("12:00:00"));
         const symbol = unitSystem === "imperial" ? "°F" : "°C";
-        const cardHTML = `
-            <div class="col">
-                <div class="card text-center shadow-sm h-100" style="background-color: #435465; border-radius: 15px; color: white; ">
-                    <div class="card-body p-3">
-                        <h5 class="card-title fw-bold mb-2">${date}</h5>
-                        <img src="https://openweathermap.org/img/wn/${icon}.png" alt="icon" width="50">
-                        <p class="display-6 fw-bold mb-0">${temp}${symbol}</p>
-                        <p class="mb-0 small weather-temp">
-                                        H: <span id="temp-high">${temp_max}</span>° 
-                                        L: <span id="temp-low">${temp_min}s</span>°
-                        </p>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += cardHTML;
-    });
+
+        dailyData.forEach(day => {
+            const date = new Date(day.dt * 1000).toLocaleDateString("en-US", { weekday: 'short' });
+            const temp = Math.round(day.main.temp);
+            const icon = day.weather[0].icon;
+            const temp_max = Math.round(day.main.temp_max);
+            const temp_min = Math.round(day.main.temp_min);
+
+            const clone = template.content.cloneNode(true);
+
+            clone.querySelector(".forecast-date").textContent = date;
+            clone.querySelector(".forecast-icon").src = `https://openweathermap.org/img/wn/${icon}.png`;
+            clone.querySelector(".forecast-temp").textContent = `${temp}${symbol}`;
+            clone.querySelector(".temp-high").textContent = temp_max;
+
+            clone.querySelector(".temp-low").textContent = temp_min;
+
+            container.appendChild(clone);
+        });
+    }
+
+    function success(pos){
+        currentLat = pos.coords.latitude;
+        currentLng = pos.coords.longitude;
+
+        const getUnit = document.getElementById('unit-toggle');
+        fetchData(currentLat, currentLng, getUnit.value)
+
+    }
+
+    function error(err){
+      if(err.code == "1"){
+
+          const edmontonLat = 53.5501;
+          const edmontonlon = -113.469;
+          currentLat = edmontonLat;
+          currentLng = edmontonlon;
+
+          const getUnit = document.getElementById('unit-toggle');
+          fetchData(currentLat, currentLng, getUnit.value)
+      } else{
+        alert("Error with getting you location")
+      }
+    }
+
+        /**
+         * For Getting the users geolocation
+         *  OpenJavaScript - https://youtu.be/YhvLnd0ylds
+         */
+    navigator.geolocation.getCurrentPosition(success, error);
 }
-
-function success(pos){
-  const lat = pos.coords.latitude;
-  const lng = pos.coords.longitude;
-
-  const getUnit = document.getElementById('unit-toggle');
-  fetchData(lat,lng,getUnit.value)
-
-}
-
-function error(err){
-  if(err.code == 1){
-    const edmontonLat = 53.5501;
-    const edmontonlon = -113.4937;
-    
-  const getUnit = document.getElementById('unit-toggle');
-    fetchData(edmontonLat,edmontonlon,getUnit.value)
-  } else{
-    alert("Error with getting you location")
-  }
-}
-
-navigator.geolocation.getCurrentPosition(success, error)
-
-});
+);

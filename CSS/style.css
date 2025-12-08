@@ -2,14 +2,16 @@
     --bg-color: #435465;
     --text-color: white;
     --card-bg-color: #2e2e2e;
-    --border-color:156, 156, 156;
+    --border-color:rgb(156, 156, 156);
 }
 #search-container{
     width: 100%;
 }
-
+label{
+    margin-left: 2rem;
+    color: var(--text-color);
+}
 #unit-toggle{
-    
     width: 100%;
 }
 
@@ -24,12 +26,16 @@
     }
 }
 
-#dispaly-card-waper{
-    color: var(--text-color);
-    background-color:var(--bg-color);
+.cards{
+    color: black;
     border-radius: 15px;
-    max-width: 500px;
     margin: 0 auto;
+}
+
+
+.svgs{
+    width: 100px;
+    height: 100px;
 }
 
 #weather-icon{
@@ -40,13 +46,13 @@
 #temp-text{
     padding: 10px;
     margin: 10px;
-    border-color: rgb(var(--border-color));
+    border-color: var(--border-color)
 }
 .weather-temp{
     opacity: 0.7;
 }
 #city-name-div{
-    border-color: rgb(var(--border-color))
+    border-color: var(--border-color)
 }
 #unit-toggle {
     flex-shrink: 0;
